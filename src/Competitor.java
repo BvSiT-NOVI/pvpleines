@@ -5,10 +5,12 @@ import java.util.Date;
 public class Competitor extends Pigeon {
     private Date finishTime;
     private String chipNumber;
+    private Member currentOwner;
 
-    public Competitor(Pigeon pigeon, String chipNumber) {
+    public Competitor(Pigeon pigeon, String chipNumber, Member currentOwner) {
         super(pigeon.getYearBirth(), pigeon.getRingNumber());
         this.chipNumber = chipNumber;
+        this.currentOwner=currentOwner;
     }
 
     public Date getFinishTime() {
@@ -23,11 +25,16 @@ public class Competitor extends Pigeon {
         return chipNumber;
     }
 
+    public Member getCurrentOwner() {
+        return currentOwner;
+    }
+
     @Override
     public String toString() {
         return "Competitor{" +
                 "finishTime=" + finishTime +
                 ", chipNumber='" + chipNumber + '\'' +
+                ", member="+currentOwner.toString()+
                 '}';
     }
 }

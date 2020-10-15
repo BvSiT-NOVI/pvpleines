@@ -38,10 +38,15 @@ public class Main {
         for (Member m:association.getMemberList()){
             int chipNumber= 12300;
             for (Pigeon p :m.getPigeonList()){
-                race1.addCompetitor(new Competitor(p,Integer.toString(chipNumber)));
+                race1.addCompetitor(new Competitor(p,Integer.toString(chipNumber),m));
                 chipNumber++;
             }
         }
+
+        member1.setFirstName("XX");
+
+        Competitor c_inside= race1.findCompetitor("18","123441");
+        System.out.println(c_inside.getCurrentOwner().toString());
 
 
         Date start = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS").parse("14-08-2020 13:20:00.000");
