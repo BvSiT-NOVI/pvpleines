@@ -10,7 +10,8 @@ public class Competitor extends Pigeon {
     public Competitor(Pigeon pigeon, String chipNumber, Member currentOwner) {
         super(pigeon.getYearBirth(), pigeon.getRingNumber());
         this.chipNumber = chipNumber;
-        this.currentOwner=currentOwner;
+        this.currentOwner= new Member(currentOwner.getFirstName()  //create a deep copy
+                ,currentOwner.getLastName(),currentOwner.getLoftLocation());
     }
 
     public Date getFinishTime() {
