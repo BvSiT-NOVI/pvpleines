@@ -1,6 +1,8 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Race {
     private String name;
@@ -9,8 +11,6 @@ public class Race {
     private Date liberationTime;
     private LiberationPlace liberationPlace;
     private List<Competitor> competitorList;
-    private List<ScoreMember> scoreMemberList;
-    private Date closeTime;
     //TODO closeTime;
     //TODO disqualification if not reported by phone in time after arrival
 
@@ -19,7 +19,6 @@ public class Race {
         this.type = type;
         this.raceDate = raceDate;
         competitorList = new ArrayList<>();
-        scoreMemberList = new ArrayList<>();
     }
 
     public String getName() {
@@ -66,10 +65,6 @@ public class Race {
         return competitorList;
     }
 
-    public void setCloseTime(Date closeTime) {
-        this.closeTime = closeTime;
-    }
-
     public double getSpeedMps(Association association, Competitor competitor){
         try{
             Member m = association.getOwner(competitor);
@@ -91,20 +86,38 @@ public class Race {
 
     public static double calcSpeedMps(double distanceKM,Date start,Date end){
         //TODO best procedure to calc duration? Use Calendar?
-        long mSeconds = (end.getTime() - start.getTime());
-        return distanceKM / mSeconds; // m/sec
+        long seconds = (end.getTime() - start.getTime())/1000;
+        return distanceKM*1000 / seconds; // m/sec
     }
 
-    public void calcResultMembers(){
-        //TODO fill scoreMemberList
+    public double calcSpeedMps(double distanceKM,Date arrivalTime){
+        return calcSpeedMps(distanceKM, liberationTime,arrivalTime);
     }
 
     public double getDistance(Location finishLocation){
         //TODO calculate distance between liberationPlace.location and finishLocation
         if (finishLocation!=null){
-            return 600;
+            return 600.555;
         }
         return 0.0;
+    }
+
+    public static double calcScore(double distanceKM,int ranking,int numCompetitors){
+        return distanceKM + numCompetitors +1 - ranking;
+    }
+
+    private int getNumQualifiedCompetitors(){
+        int numQualified = 0;
+        for(Competitor c:competitorList){
+            if (c.getSpeedMps()>0) numQualified++;
+        }
+        return numQualified;
+        /*
+        //TODO simplify? See https://stackoverflow.com/questions/41277862/how-to-filter-a-list-with-a-property-of-an-object-in-the-second-level-list-using
+        List<Competitor> listQualified =  competitorList.stream().filter(c->c.getSpeedMps()>0)
+                .collect(Collectors.toList());
+        return listQualified.size();
+         */
     }
 
     public boolean addCompetitor(Competitor competitor){
@@ -117,6 +130,43 @@ public class Race {
             if (c.hasOwnerID(year,ringNumber)) return c;
         }
         return null;
+    }
+
+    public void calcResult(){
+        //Calculate average speed and save in Competitor
+        for (Competitor c:competitorList){
+            c.setSpeedMps(this);
+        }
+
+        //Order competitors on average speed, fastest first
+        competitorList.sort(Comparator.comparing(Competitor::getSpeedMps).reversed());
+
+        //calc scores and save in competitorList
+        int numQualifiedCompetitors = getNumQualifiedCompetitors();
+        for (int i=0;i< competitorList.size();i++){
+            Competitor c = competitorList.get(i);
+            //TODO distance is calculated also for calc speed
+            double distance = getDistance(c.getCurrentOwner().getLoftLocation());
+            c.setScore(calcScore(distance,i+1,numQualifiedCompetitors));
+        }
+    }
+
+    public void printScore(){
+        calcResult();
+        SimpleDateFormat sd = new SimpleDateFormat("h:mm:ss.sss");
+        NumberFormat nf = new DecimalFormat("#0.000");
+        for (Competitor c : competitorList){
+            System.out.println(
+                    c.getCurrentOwner().getFullName()
+                    + '\t' + c.getShortYear() +"-"+c.getRingNumber()
+                    +'\t'+c.getChipNumber()
+                    +'\t'+ sd.format(c.getFinishTime())
+                    //+'\t'+ nf.format(4.0)
+                    //+'\t'+ c.getSpeedMps()
+                    +'\t'+ nf.format(c.getSpeedMps())
+                    + '\t'+ c.getScore()
+                );
+        }
     }
 
 }

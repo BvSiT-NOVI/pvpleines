@@ -71,6 +71,10 @@ public class Member {
         return pigeonList;
     }
 
+    public String getFullName(){
+       return firstName.substring(0, 1).toUpperCase() + ". " + lastName;
+    }
+
     public boolean addPigeon(Pigeon pigeon){
         //TODO check if exists
         pigeonList.add(pigeon);

@@ -48,13 +48,6 @@ public class Main {
         Competitor c_inside= race1.findCompetitor("18","123441");
         System.out.println(c_inside.getCurrentOwner().toString());
 
-
-        Date start = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS").parse("14-08-2020 13:20:00.000");
-        Date end = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS").parse("14-08-2020 13:21:00.000");
-
-        System.out.println(Race.calcSpeedMps(60,start,end));
-
-
         //Race starts, pigeons are released
 
         race1.setLiberationTime(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS").parse("14-08-2020 13:20:12.456"));
@@ -83,10 +76,13 @@ public class Main {
             c4.setFinishTime(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS").parse("15-08-2020 13:20:12.456"));
         }
 
+        /*
         for (Competitor c : race1.getCompetitorList()){
             System.out.println(c.getShortYear()+"-"+c.getRingNumber()+'\t'+c.getChipNumber()+
                     '\t'+c.getFinishTime()+'\t'+ race1.getSpeedMps(association,c));
         }
+        */
+        race1.printScore();
 
         //Transfer ownership of pigeon
 

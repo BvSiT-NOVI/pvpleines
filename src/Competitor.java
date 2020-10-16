@@ -6,6 +6,8 @@ public class Competitor extends Pigeon {
     private Date finishTime;
     private String chipNumber;
     private Member currentOwner;
+    private double speedMps;
+    private double score;
 
     public Competitor(Pigeon pigeon, String chipNumber, Member currentOwner) {
         super(pigeon.getYearBirth(), pigeon.getRingNumber());
@@ -28,6 +30,29 @@ public class Competitor extends Pigeon {
 
     public Member getCurrentOwner() {
         return currentOwner;
+    }
+
+    public double getSpeedMps() {
+        return speedMps;
+    }
+
+    public void setSpeedMps(Race race) {
+        if (currentOwner==null) return;
+        double distance = race.getDistance(currentOwner.getLoftLocation());
+        if (distance > 0){
+            if (finishTime!=null) {
+                //TODO non static? Simplify?
+                speedMps = race.calcSpeedMps(distance,finishTime);
+            }
+        }
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 
     @Override
