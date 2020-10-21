@@ -17,21 +17,26 @@ public class Main {
         final Date YEAR_2020= new SimpleDateFormat("yyyy").parse("2020");
 
         //TODO precision location liberation place?
-        final LiberationPlace BERGERAC = new LiberationPlace("Bergerac",new Location(+445049.0,	+003024.0));
+        final LiberationPlace BERGERAC = new LiberationPlace("Bergerac",new Location(0.30240,44.50490));
 
-        Member member1 = new Member("Gerrit","van Straten",new Location(52.389359, 4.619346));
+        Member member1 = new Member("Gerrit","van Straten",new Location(4.619346,52.389359 ));
         member1.addPigeon(new Pigeon(YEAR_2018,"123441"));
         member1.addPigeon(new Pigeon(YEAR_2020,"123442"));
 
-        Member member2 = new Member("Piet","van der Wel",new Location(52.419828, 4.654193));
+        Member member2 = new Member("Piet","van der Wel",new Location(4.654193, 52.419828));
         member2.addPigeon(new Pigeon(YEAR_2019,"123443"));
         member2.addPigeon(new Pigeon(YEAR_2020,"123444"));
 
         association.addMember(member1);
         association.addMember(member2);
 
+        Season season=new Season("2020");
+
         Race race1 = new Race("Bergerac 2020","MARATHON",new SimpleDateFormat("dd-MM-yyyy").parse("14-08-2020"));
         race1.setLiberationPlace(BERGERAC);
+
+        season.addRace(race1);
+
 
         //Enter pigeons in race (marking procedure)
 
@@ -84,7 +89,18 @@ public class Main {
         */
         race1.printScore();
 
-        //Transfer ownership of pigeon
+        season.printResults();
+
+
+
+
+
+
+
+
+
+
+        //TODO Transfer ownership of pigeon
 
 
 

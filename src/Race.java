@@ -95,9 +95,8 @@ public class Race {
     }
 
     public double getDistance(Location finishLocation){
-        //TODO calculate distance between liberationPlace.location and finishLocation
         if (finishLocation!=null){
-            return 600.555;
+            return Geo.distance(getLiberationPlace().getLocation(), finishLocation);
         }
         return 0.0;
     }
@@ -160,11 +159,12 @@ public class Race {
                     c.getCurrentOwner().getFullName()
                     + '\t' + c.getShortYear() +"-"+c.getRingNumber()
                     +'\t'+c.getChipNumber()
+                    +'\t'+ nf.format(Geo.distance(liberationPlace.getLocation(), c.getCurrentOwner().getLoftLocation()))
                     +'\t'+ sd.format(c.getFinishTime())
                     //+'\t'+ nf.format(4.0)
                     //+'\t'+ c.getSpeedMps()
                     +'\t'+ nf.format(c.getSpeedMps())
-                    + '\t'+ c.getScore()
+                    + '\t'+ nf.format(c.getScore())
                 );
         }
     }

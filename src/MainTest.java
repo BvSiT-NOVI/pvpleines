@@ -13,5 +13,13 @@ public class MainTest {
 
         System.out.println(speed);
         System.out.println(nf.format(speed));
+
+        final LiberationPlace BERGERAC = new LiberationPlace("Bergerac",new Location(0.30240,44.50490));
+        Member member1 = new Member("Gerrit","van Straten",new Location(4.619346,52.389359 ));
+
+        System.out.println(Geo.distance(BERGERAC.getLocation(),member1.getLoftLocation()));
+
+
+
     }
 }

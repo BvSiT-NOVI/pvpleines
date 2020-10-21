@@ -9,6 +9,7 @@ public class Pigeon {
             Ex. If full owner registration number is 'NL 21 – 1234567' then ringNumber = '1234567'
      */
     private String ringNumber;
+    private String countryCode="NL";
 
     public Pigeon(Date yearBirth, String ringNumber) {
         this.yearBirth = yearBirth;
@@ -21,6 +22,16 @@ public class Pigeon {
 
     public String getRingNumber() {
         return ringNumber;
+    }
+
+    public String getOwnerID() {
+        //return full ring owner registration
+        return countryCode+"-"+getShortYear()+"-"+getRingNumber();
+    }
+
+    public String getShortYear(){
+        DateFormat dateFormat = new SimpleDateFormat("yy");
+        return dateFormat.format(yearBirth);
     }
 
     public boolean hasOwnerID(String year,String ringNumber){
@@ -37,11 +48,6 @@ public class Pigeon {
             if (this.yearBirth.compareTo(date)==0) return true;
         }
         return false;
-    }
-
-    public String getShortYear(){
-        DateFormat dateFormat = new SimpleDateFormat("yy");
-        return dateFormat.format(yearBirth);
     }
 
     @Override
