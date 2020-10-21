@@ -23,8 +23,6 @@ public abstract class Result<T> {
         }
     }
 
-    public enum ResultType{RACE,TOTAL};
-
     public SimpleDateFormat timeformat = new SimpleDateFormat("h:mm:ss.sss");
     public NumberFormat numberformat = new DecimalFormat("#0.000");
 

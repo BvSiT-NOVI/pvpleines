@@ -55,6 +55,12 @@ public class Pigeon {
         return false;
     }
 
+    public boolean hasOwnerID(String ownerID){
+        //TODO with or without country code, assume without country code
+        if (getOwnerID().equalsIgnoreCase(ownerID)) return true;
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Pigeon{" +

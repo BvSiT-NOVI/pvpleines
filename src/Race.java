@@ -131,6 +131,13 @@ public class Race {
         return null;
     }
 
+    public Competitor findCompetitor(String ownerID){
+        for (Competitor c:competitorList){
+            if (c.hasOwnerID(ownerID)) return c; //TODO assumes without country code
+        }
+        return null;
+    }
+
     public void calcResult(){
         //Calculate average speed and save in Competitor
         for (Competitor c:competitorList){
