@@ -24,10 +24,15 @@ public class Pigeon {
         return ringNumber;
     }
 
-    public String getOwnerID() {
+    public String getOwnerID(boolean withCountryCode) {
         //return full ring owner registration
-        return countryCode+"-"+getShortYear()+"-"+getRingNumber();
+        return (withCountryCode?countryCode+"-":"")+getShortYear()+"-"+getRingNumber();
     }
+
+    public String getOwnerID() {
+        return getOwnerID(false);
+    }
+
 
     public String getShortYear(){
         DateFormat dateFormat = new SimpleDateFormat("yy");

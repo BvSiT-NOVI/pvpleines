@@ -25,12 +25,12 @@ public class Season {
     }
 
     public void printResults(){
-        List<Result<Competitor>> resultList = new ArrayList<>();
+        List<ResultCompetitor> resultList = new ArrayList<>();
         for (Race r:raceList){
             for (Competitor c:r.getCompetitorList()){
-                Result<Competitor> found = findResultForCompetitor(c,resultList);
+                ResultCompetitor found = findResultForCompetitor(c,resultList);
                 if (found==null){
-                    resultList.add(new Result<Competitor>(c,c.getScore()));
+                    resultList.add(new ResultCompetitor(c,c.getScore()));
                 }
                 else {
                     found.setScore(found.getScore()+c.getScore());
@@ -40,16 +40,17 @@ public class Season {
 
         resultList.sort(new ResultComparator());
 
-        for (Result<Competitor> r: resultList){
-            System.out.println( ((Competitor) r.get()).getOwnerID()+'\t'+r.getScore() );
+        System.out.println(ResultCompetitor.header());
+        for (ResultCompetitor r: resultList){
+            System.out.println(r.line() );
         }
 
 
     }
 
-    private Result<Competitor> findResultForCompetitor(Competitor competitor,List<Result<Competitor>> resultList){
-        for (Result<Competitor> r:resultList){
-            Competitor c = (Competitor) r.get();
+    private ResultCompetitor findResultForCompetitor(Competitor competitor,List<ResultCompetitor> resultList){
+        for (ResultCompetitor r:resultList){
+            Competitor c =  r.get();
             if (competitor.getOwnerID().equalsIgnoreCase(c.getOwnerID())) return r;
         }
         return null;

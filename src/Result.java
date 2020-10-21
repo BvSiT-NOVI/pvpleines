@@ -1,6 +1,32 @@
-public class Result<T> {
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+
+public abstract class Result<T> {
     private T t;
     private Double score;
+
+    public enum Header {
+        OWNER_NAME("Lid"),
+        OWNER_RING_ID("RingID"),
+        CHIP_ID("ChipId"),
+        DISTANCE("AfstandKM"),
+        RACE_TIME("Racetijd"),
+        ARRIVAL_TIME("Aankomsttijd"),
+        SPEED("Snelheid"),
+        SCORE("Punten");
+
+        public final String label;
+
+        Header(String label) {
+            this.label = label;
+        }
+    }
+
+    public enum ResultType{RACE,TOTAL};
+
+    public SimpleDateFormat timeformat = new SimpleDateFormat("h:mm:ss.sss");
+    public NumberFormat numberformat = new DecimalFormat("#0.000");
 
     public T get(){
         return this.t;
@@ -26,5 +52,10 @@ public class Result<T> {
     public void setScore(double score) {
         this.score = score;
     }
+
+    public abstract String line();
+
+    //TODO abstract but static in subclasses?
+    //public abstract String header();
 
 }
