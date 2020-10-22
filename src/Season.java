@@ -17,8 +17,6 @@ public class Season {
         this(new SimpleDateFormat("yyyy").parse(year));
     }
 
-
-
     public boolean addRace(Race race){
         raceList.add(race);
         return true;
@@ -38,7 +36,7 @@ public class Season {
             }
         }
 
-        resultList.sort(new ResultComparator());
+        resultList.sort(new ResultComparator().reversed());
 
         System.out.println(ResultCompetitor.header());
         for (ResultCompetitor r: resultList){

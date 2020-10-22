@@ -1,4 +1,6 @@
 public class ResultMember extends Result<Member>{
+    public final static String printFormat="%-20s %12s %10s";
+
     public ResultMember(Member owner) {
         super(owner);
     }
@@ -11,11 +13,11 @@ public class ResultMember extends Result<Member>{
     //https://dzone.com/articles/how-to-format-a-string-clarified
     @Override
     public String line() {
-        return String.format("%-20s %10s", super.get().getFullName(), numberformat.format(getScore()));
+        return String.format(printFormat, super.get().getFullName(), numberformat.format(getScore()));
     }
 
     //TODO @Override gives error. How to ensure to have this as an override from abstract superclass Result
     public static String header() {
-        return String.format("%-20s %10s", Header.OWNER_NAME.label,Header.SCORE.label);
+        return String.format(printFormat, Header.OWNER_NAME.label,Header.SCORE.label);
     }
 }

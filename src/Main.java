@@ -48,19 +48,11 @@ public class Main {
             }
         }
 
-        member1.setFirstName("XX");
-
-        Competitor c_inside= race1.findCompetitor("18","123441");
-        System.out.println(c_inside.getCurrentOwner().toString());
-
         //Race starts, pigeons are released
 
         race1.setLiberationTime(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS").parse("14-08-2020 13:20:12.456"));
 
-        //enter finish time
-
-        //Pigeon(YEAR_2018,"123441"))
-
+        //enter finish times
         Competitor c1= race1.findCompetitor("18","123441");
         if (c1!=null) {
             c1.setFinishTime(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS").parse("15-08-2020 14:23:12.456"));
@@ -81,44 +73,17 @@ public class Main {
             c4.setFinishTime(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS").parse("15-08-2020 13:20:12.456"));
         }
 
-        /*
-        for (Competitor c : race1.getCompetitorList()){
-            System.out.println(c.getShortYear()+"-"+c.getRingNumber()+'\t'+c.getChipNumber()+
-                    '\t'+c.getFinishTime()+'\t'+ race1.getSpeedMps(association,c));
+        //TODO simplify
+        try{
+            race1.printResult();
         }
-        */
-        race1.printScore();
+        catch (Exception e){
+           e.printStackTrace();
+        }
 
         season.printResults();
 
-
-
-
-
-
-
-
-
-
         //TODO Transfer ownership of pigeon
-
-
-
-
-/*
-        Pigeon p = member1.findPigeon("18","123441");
-        if (p!=null) System.out.println(p.toString());
-*/
-
-/*        for (Member m:association.getMemberList()){
-            System.out.println(m.toString());
-            for (Pigeon p1:m.getPigeonList()){
-                System.out.println(p1.toString());
-            }
-        }*/
-
-
-
 
     }
 }

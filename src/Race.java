@@ -176,4 +176,19 @@ public class Race {
         }
     }
 
+    public void printResult() throws Exception {
+        calcResult();
+        List<ResultCompetitor> resultCompetitors = new ArrayList<>();
+        for (Competitor c: competitorList){
+            resultCompetitors.add(new ResultCompetitor(c,c.getScore())); //is already ordered on speed
+        }
+
+        System.out.println(ResultCompetitor.headerRace());
+        for(ResultCompetitor r: resultCompetitors){
+            System.out.println(r.lineRace(this));
+        }
+
+
+    }
+
 }

@@ -1,5 +1,8 @@
 public class ResultCompetitor extends Result<Competitor> {
 
+    public final static String printFormatRace="%-20s %12s %10s %10s %12s %10s %10s";
+    public final static String printFormat="%-20s %12s %10s";
+
     public ResultCompetitor(Competitor competitor) {
         super(competitor);
     }
@@ -14,7 +17,7 @@ public class ResultCompetitor extends Result<Competitor> {
     public String line() {
         Competitor c = get();
         //TODO extract format string as (static?) variable?
-        return String.format("%-20s %12s %10s ",
+        return String.format(printFormat,
                 c.getCurrentOwner().getFullName(),
                 c.getOwnerID(),
                 numberformat.format(getScore())
@@ -23,7 +26,7 @@ public class ResultCompetitor extends Result<Competitor> {
 
     //TODO @Override gives error. How to ensure to have this as an override from abstract superclass Result
     public static String header() {
-        return String.format("%-20s %12s %10s ",
+        return String.format(printFormat,
                 Header.OWNER_NAME.label,
                 Header.OWNER_RING_ID.label,
                 Header.SCORE.label);
@@ -31,14 +34,13 @@ public class ResultCompetitor extends Result<Competitor> {
 
     public String lineRace(Race race) throws Exception {
         Competitor c = get();
-        //Check this is the correct race
+        //Check this is the correct race //TODO simplify
         if (race.findCompetitor(c.getOwnerID())==null) {
             throw new Exception("Competitor does not exist in this Race");
         }
 
         double distance = Geo.distance(race.getLiberationPlace().getLocation(), c.getCurrentOwner().getLoftLocation());
-        //TODO extract format string as (static?) variable?
-        return String.format("%-20s %12s %10s %10s %10s %6 %10",
+        return String.format(printFormatRace,
                 c.getCurrentOwner().getFullName(),
                 c.getOwnerID(),
                 c.getChipNumber(),
@@ -46,18 +48,19 @@ public class ResultCompetitor extends Result<Competitor> {
                 //TODO race time
                 timeformat.format(c.getFinishTime()),
                 numberformat.format(c.getSpeedMps()),
-                getScore()  //NB not from Competitor::getScore
+                numberformat.format(getScore())  //NB not from Competitor::getScore
         );
     }
 
     public static String headerRace() {
-        return String.format("%-20s %12s %10s %10s %10s %6 %10",
+        return String.format(printFormatRace,
                 Header.OWNER_NAME.label,
                 Header.OWNER_RING_ID.label,
                 Header.CHIP_ID.label,
                 Header.DISTANCE.label,
                 Header.ARRIVAL_TIME.label,
-                Header.SPEED.label);
+                Header.SPEED.label,
+                Header.SCORE.label);
     }
 
 
