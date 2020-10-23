@@ -19,7 +19,14 @@ public class MainTest {
 
         System.out.println(Geo.distance(BERGERAC.getLocation(),member1.getLoftLocation()));
 
+        Seasons seasons = new Seasons();
+        seasons.add(new Season("2019"));
+        seasons.add(new Season("2020"));
+        seasons.add(new Season("2021"));
 
+        for (Season s : seasons.getSeasonList()){
+            System.out.println(s.toString());
+        }
 
     }
 }

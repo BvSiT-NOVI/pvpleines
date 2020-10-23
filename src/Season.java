@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Season {
+public class Season implements Comparable<Season>{
     private List<Race> raceList;
     private Date year;
 
@@ -12,6 +12,12 @@ public class Season {
         this.year = year;
         this.raceList = new ArrayList<>();
     }
+
+    public Date getYear() {
+        return year;
+    }
+
+
 
     public Season(String year) throws ParseException {
         this(new SimpleDateFormat("yyyy").parse(year));
@@ -42,8 +48,6 @@ public class Season {
         for (ResultCompetitor r: resultList){
             System.out.println(r.line() );
         }
-
-
     }
 
     private ResultCompetitor findResultForCompetitor(Competitor competitor,List<ResultCompetitor> resultList){
@@ -54,4 +58,16 @@ public class Season {
         return null;
     }
 
+    @Override
+    public int compareTo(Season season) {
+        return season.getYear().compareTo(year);
+    }
+
+    @Override
+    public String toString() {
+        return "Season{" +
+                "raceList=" + raceList +
+                ", year=" + year +
+                '}';
+    }
 }
