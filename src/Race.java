@@ -65,25 +65,6 @@ public class Race {
         return competitorList;
     }
 
-    public double getSpeedMps(Association association, Competitor competitor){
-        try{
-            Member m = association.getOwner(competitor);
-            if (m!=null){
-                double distance = getDistance(m.getLoftLocation());
-                if (distance > 0){
-                    if (competitor.getFinishTime()!=null) {
-                        return calcSpeedMps(distance,liberationTime,competitor.getFinishTime());
-                    }
-                }
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            return 0.0;
-        }
-        return 0.0;
-    }
-
     public static double calcSpeedMps(double distanceKM,Date start,Date end){
         //TODO best procedure to calc duration? Use Calendar?
         long seconds = (end.getTime() - start.getTime())/1000;

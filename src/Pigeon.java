@@ -9,7 +9,7 @@ public class Pigeon {
             Ex. If full owner registration number is 'NL 21 – 1234567' then ringNumber = '1234567'
      */
     private String ringNumber;
-    private String countryCode="NL";
+    private String countryCode="NL";//TODO
 
     public Pigeon(Date yearBirth, String ringNumber) {
         this.yearBirth = yearBirth;
