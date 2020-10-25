@@ -17,8 +17,6 @@ public class Season implements Comparable<Season>{
         return year;
     }
 
-
-
     public Season(String year) throws ParseException {
         this(new SimpleDateFormat("yyyy").parse(year));
     }
@@ -28,16 +26,22 @@ public class Season implements Comparable<Season>{
         return true;
     }
 
-    public void printResults(){
+    public void printGeneralResults() {
+        printResults(null);
+    }
+
+    public void printResults(Race.League league){
         List<ResultCompetitor> resultList = new ArrayList<>();
         for (Race r:raceList){
-            for (Competitor c:r.getCompetitorList()){
-                ResultCompetitor found = findResultForCompetitor(c,resultList);
-                if (found==null){
-                    resultList.add(new ResultCompetitor(c,c.getScore()));
-                }
-                else {
-                    found.setScore(found.getScore()+c.getScore());
+            if (r.getLeague()==league || league==null){
+                for (Competitor c:r.getCompetitorList()){
+                    ResultCompetitor found = findResultForCompetitor(c,resultList);
+                    if (found==null){
+                        resultList.add(new ResultCompetitor(c,c.getScore()));
+                    }
+                    else {
+                        found.setScore(found.getScore()+c.getScore());
+                    }
                 }
             }
         }
@@ -49,6 +53,33 @@ public class Season implements Comparable<Season>{
             System.out.println(r.line() );
         }
     }
+
+/*
+    public void printResultsFanciers(Race.League league){
+        List<ResultMember> resultList = new ArrayList<>();
+        for (Race r:raceList){
+            if (r.getLeague()==league || league==null){
+                for (Competitor c:r.getCompetitorList()){
+                    ResultCompetitor found = findResultForCompetitor(c,resultList);
+                    if (found==null){
+                        resultList.add(new ResultCompetitor(c,c.getScore()));
+                    }
+                    else {
+                        found.setScore(found.getScore()+c.getScore());
+                    }
+                }
+            }
+        }
+
+        resultList.sort(new ResultComparator().reversed());
+
+        System.out.println(ResultCompetitor.header());
+        for (ResultCompetitor r: resultList){
+            System.out.println(r.line() );
+        }
+    }
+*/
+
 
     private ResultCompetitor findResultForCompetitor(Competitor competitor,List<ResultCompetitor> resultList){
         for (ResultCompetitor r:resultList){

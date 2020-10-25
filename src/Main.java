@@ -31,16 +31,15 @@ public class Main {
 
         Season season=new Season("2020");
 
-        Race race1 = new Race("Bergerac 2020","MARATHON",new SimpleDateFormat("dd-MM-yyyy").parse("14-08-2020"));
+        Race race1 = new Race("Bergerac 2020",Race.League.MARATHON,new SimpleDateFormat("dd-MM-yyyy").parse("14-08-2020"));
         race1.setLiberationPlace(BERGERAC);
 
         season.addRace(race1);
 
 
         //Enter pigeons in race (marking procedure)
-
+        int chipNumber= 12300;
         for (Member m:association.getMemberList()){
-            int chipNumber= 12300;
             for (Pigeon p :m.getPigeonList()){
                 race1.addCompetitor(new Competitor(p,Integer.toString(chipNumber),m));
                 chipNumber++;
@@ -72,17 +71,26 @@ public class Main {
             c4.setFinishTime(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS").parse("15-08-2020 13:20:12.456"));
         }
 
+
+        System.out.println("Uitslag vliegers " + race1.getName()+ " Competitie: " + race1.getLeague().label);
         //TODO simplify
         try{
-            race1.printResult();
+            race1.printResult(Result.ResultType.FLYER);
         }
         catch (Exception e){
            e.printStackTrace();
         }
 
-        season.printResults();
+        System.out.println("Algemeen klassement vliegers");
+        season.printGeneralResults();
+
+        Race.League league = Race.League.MARATHON;
+        System.out.println("Klassement "+ league.label);
+        season.printResults(Race.League.MARATHON);
 
         //TODO Transfer ownership of pigeon
-
     }
+
+
+
 }

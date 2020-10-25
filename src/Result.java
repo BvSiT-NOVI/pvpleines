@@ -6,6 +6,11 @@ public abstract class Result<T> {
     private T t;
     private Double score;
 
+    public static enum ResultType{
+        FLYER,
+        FANCIER;
+    }
+
     public enum Header {
         OWNER_NAME("Lid"),
         OWNER_RING_ID("RingID"),

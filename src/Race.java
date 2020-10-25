@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Race {
     private String name;
-    private String type;//fond name
+    private League league;//fond name
     private Date raceDate;
     private Date liberationTime;
     private Place liberationPlace;
@@ -13,9 +13,23 @@ public class Race {
     //TODO closeTime;
     //TODO disqualification if not reported by phone in time after arrival
 
-    public Race(String name, String type, Date raceDate) {
+    public static enum League {
+        VITESSE("Vitesse"),
+        MIDFOND("Midfond"),
+        DAYFOND("Eendaagse fond"),
+        MARATHON("Marathon"),
+        YOUNG_FLYERS("Jonge duiven");
+
+        public final String label;
+
+        League(String label) {
+            this.label = label;
+        }
+    }
+
+    public Race(String name, League league, Date raceDate) {
         this.name = name;
-        this.type = type;
+        this.league = league;
         this.raceDate = raceDate;
         competitorList = new ArrayList<>();
     }
@@ -28,12 +42,12 @@ public class Race {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public League getLeague() {
+        return league;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLeague(League league) {
+        this.league = league;
     }
 
     public Date getRaceDate() {
@@ -156,19 +170,31 @@ public class Race {
         }
     }
 
-    public void printResult() throws Exception {
-        calcResult();
-        List<ResultCompetitor> resultCompetitors = new ArrayList<>();
-        for (Competitor c: competitorList){
-            resultCompetitors.add(new ResultCompetitor(c,c.getScore())); //is already ordered on speed
+    public void printResult(Result.ResultType resultType) throws Exception {
+        calcResult();//TODO Only execute once
+
+        switch (resultType){
+            case FLYER:
+                List<ResultCompetitor> resultCompetitors = new ArrayList<>();
+                for (Competitor c: competitorList){
+                    resultCompetitors.add(new ResultCompetitor(c,c.getScore())); //is already ordered on speed
+                }
+                System.out.println(ResultCompetitor.headerRace());
+                for(ResultCompetitor r: resultCompetitors){
+                    System.out.println(r.lineRace(this));
+                }
+                break;
+            case FANCIER:
+                List<ResultMember> resultMembers = new ArrayList<>();
+                for (Competitor c: competitorList){
+                    resultMembers.add(new ResultMember(c.getCurrentOwner(),c.getScore())); //is already ordered on speed
+                }
+                System.out.println(ResultMember.header());
+                for(ResultMember r: resultMembers){
+                    System.out.println(r.line());
+                }
+                break;
         }
-
-        System.out.println(ResultCompetitor.headerRace());
-        for(ResultCompetitor r: resultCompetitors){
-            System.out.println(r.lineRace(this));
-        }
-
-
     }
 
 }
