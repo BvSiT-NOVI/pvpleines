@@ -2,14 +2,13 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Race {
     private String name;
     private String type;//fond name
     private Date raceDate;
     private Date liberationTime;
-    private LiberationPlace liberationPlace;
+    private Place liberationPlace;
     private List<Competitor> competitorList;
     //TODO closeTime;
     //TODO disqualification if not reported by phone in time after arrival
@@ -53,11 +52,11 @@ public class Race {
         this.liberationTime = liberationTime;
     }
 
-    public LiberationPlace getLiberationPlace() {
+    public Place getLiberationPlace() {
         return liberationPlace;
     }
 
-    public void setLiberationPlace(LiberationPlace liberationPlace) {
+    public void setLiberationPlace(Place liberationPlace) {
         this.liberationPlace = liberationPlace;
     }
 

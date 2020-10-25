@@ -1,8 +1,8 @@
-public class LiberationPlace {
+public class Place {
     private String name;
     private Location location;
 
-    public LiberationPlace(String name, Location location) {
+    public Place(String name, Location location) {
         this.name = name;
         this.location = location;
     }

@@ -1,6 +1,5 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Main {
@@ -17,18 +16,18 @@ public class Main {
         final Date YEAR_2020= new SimpleDateFormat("yyyy").parse("2020");
 
         //TODO precision location liberation place?
-        final LiberationPlace BERGERAC = new LiberationPlace("Bergerac",new Location(0.30240,44.50490));
+        final Place BERGERAC = new Place("Bergerac",new Location(0.30240,44.50490));
 
-        Member member1 = new Member("Gerrit","van Straten",new Location(4.619346,52.389359 ));
-        member1.addPigeon(new Pigeon(YEAR_2018,"123441"));
-        member1.addPigeon(new Pigeon(YEAR_2020,"123442"));
+        Owner owner1 = new Owner("Gerrit","van Straten",new Location(4.619346,52.389359 ));
+        owner1.addPigeon(new Pigeon(YEAR_2018,"123441"));
+        owner1.addPigeon(new Pigeon(YEAR_2020,"123442"));
 
-        Member member2 = new Member("Piet","van der Wel",new Location(4.654193, 52.419828));
-        member2.addPigeon(new Pigeon(YEAR_2019,"123443"));
-        member2.addPigeon(new Pigeon(YEAR_2020,"123444"));
+        Owner owner2 = new Owner("Piet","van der Wel",new Location(4.654193, 52.419828));
+        owner2.addPigeon(new Pigeon(YEAR_2019,"123443"));
+        owner2.addPigeon(new Pigeon(YEAR_2020,"123444"));
 
-        association.addMember(member1);
-        association.addMember(member2);
+        association.addMember(owner1);
+        association.addMember(owner2);
 
         Season season=new Season("2020");
 

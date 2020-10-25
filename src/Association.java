@@ -78,8 +78,14 @@ public class Association {
         return true;
     }
 
-    public Member getOwner(Pigeon pigeon){
-        for (Member m: memberList){
+    public boolean addMember(Owner owner){
+        //TODO check if exists
+        memberList.add(new Member(owner));
+        return true;
+    }
+
+    public Owner getOwner(Pigeon pigeon){
+        for (Owner m: memberList){
             for (Pigeon p:m.getPigeonList()){
                 if (p.hasOwnerID(pigeon.getShortYear(), pigeon.getRingNumber())) return m;
             }

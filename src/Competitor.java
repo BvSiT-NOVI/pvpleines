@@ -1,18 +1,16 @@
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Competitor extends Pigeon {
     private Date finishTime;
     private String chipNumber;
-    private Member currentOwner;
+    private Owner currentOwner;
     private double speedMps;
     private double score;
 
-    public Competitor(Pigeon pigeon, String chipNumber, Member currentOwner) {
+    public Competitor(Pigeon pigeon, String chipNumber, Owner currentOwner) {
         super(pigeon.getYearBirth(), pigeon.getRingNumber());
         this.chipNumber = chipNumber;
-        this.currentOwner= new Member(currentOwner.getFirstName()  //create a deep copy
+        this.currentOwner= new Owner(currentOwner.getFirstName()  //create a deep copy NB TODO with empty Owner::pigeonList ??
                 ,currentOwner.getLastName(),currentOwner.getLoftLocation());
     }
 
@@ -28,7 +26,7 @@ public class Competitor extends Pigeon {
         return chipNumber;
     }
 
-    public Member getCurrentOwner() {
+    public Owner getCurrentOwner() {
         return currentOwner;
     }
 

@@ -1,11 +1,11 @@
-public class ResultMember extends Result<Member>{
+public class ResultMember extends Result<Owner>{
     public final static String printFormat="%-20s %12s %10s";
 
-    public ResultMember(Member owner) {
+    public ResultMember(Owner owner) {
         super(owner);
     }
 
-    public ResultMember(Member owner, double score) {
+    public ResultMember(Owner owner, double score) {
         super(owner, score);
     }
 
