@@ -34,6 +34,7 @@ public class Season implements Comparable<Season>{
         List<ResultCompetitor> resultList = new ArrayList<>();
         for (Race race:raceList){
             if (race.getLeague()==league || league==null){
+                //TODO move to ResultCompetitor.addToList
                 for (Competitor c:race.getCompetitorList()){
                     ResultCompetitor found = ResultCompetitor.findResultForCompetitor(c,resultList);
                     if (found==null){
@@ -59,57 +60,17 @@ public class Season implements Comparable<Season>{
         for (Race race:raceList){
             if (race.getLeague()==league || league==null){
                 for (Competitor c:race.getCompetitorList()){
-                    ResultMember rm;
-                    rm = ResultMember.findByMemberRegistrationId(c.getMemberRegistrationId(),resultMembers);
-                    if (rm == null){
-                        rm = new ResultMember(c);
-                        resultMembers.add(rm);
-                    }
-                    rm.addScore(c.getScore());//TODO test if changed in list??
+                    ResultMember.addToList(c,resultMembers);//First add ResultMember to list if not exists, then add score for this competitor
                 }
             }
         }
 
         resultMembers.sort(new ResultComparator().reversed());
-
         System.out.println(ResultMember.header());
         for (ResultMember rm: resultMembers){
             System.out.println(rm.line() );
         }
     }
-
-
-
-
-
-
-
-
-/*
-    public void printResultsFanciers(Race.League league){
-        List<ResultMember> resultList = new ArrayList<>();
-        for (Race r:raceList){
-            if (r.getLeague()==league || league==null){
-                for (Competitor c:r.getCompetitorList()){
-                    ResultCompetitor found = findResultForCompetitor(c,resultList);
-                    if (found==null){
-                        resultList.add(new ResultCompetitor(c,c.getScore()));
-                    }
-                    else {
-                        found.setScore(found.getScore()+c.getScore());
-                    }
-                }
-            }
-        }
-
-        resultList.sort(new ResultComparator().reversed());
-
-        System.out.println(ResultCompetitor.header());
-        for (ResultCompetitor r: resultList){
-            System.out.println(r.line() );
-        }
-    }
-*/
 
     @Override
     public int compareTo(Season season) {

@@ -151,28 +151,8 @@ public class Race {
         }
     }
 
-    public void printScore(){
-        calcResult();
-        SimpleDateFormat sd = new SimpleDateFormat("h:mm:ss.sss");
-        NumberFormat nf = new DecimalFormat("#0.000");
-        for (Competitor c : competitorList){
-            System.out.println(
-                    c.getCurrentOwner().getFullName()
-                    + '\t' + c.getShortYear() +"-"+c.getRingNumber()
-                    +'\t'+c.getChipNumber()
-                    +'\t'+ nf.format(Geo.distance(liberationPlace.getLocation(), c.getCurrentOwner().getLoftLocation()))
-                    +'\t'+ sd.format(c.getFinishTime())
-                    //+'\t'+ nf.format(4.0)
-                    //+'\t'+ c.getSpeedMps()
-                    +'\t'+ nf.format(c.getSpeedMps())
-                    + '\t'+ nf.format(c.getScore())
-                );
-        }
-    }
-
     public void printResult(Result.ResultType resultType) throws Exception {
         calcResult();//TODO Only execute once
-
         switch (resultType){
             case FLYER:
                 List<ResultCompetitor> resultCompetitors = new ArrayList<>();
@@ -187,15 +167,7 @@ public class Race {
             case FANCIER:
                 List<ResultMember> resultMembers = new ArrayList<>();
                 for (Competitor c: competitorList){
-                    ResultMember rm;
-                    rm = ResultMember.findByMemberRegistrationId(c.getMemberRegistrationId(),resultMembers);
-                    if (rm == null){
-                        rm = new ResultMember(c);//also adds first score
-                        resultMembers.add(rm);
-                    }
-                    else {
-                        rm.addScore(c.getScore());//TODO test if changed in list??
-                    }
+                    ResultMember.addToList(c,resultMembers);//Add first ResultMember to list if not exists, then add score for this competitor
                 }
                 resultMembers.sort(new ResultComparator().reversed());
                 System.out.println(ResultMember.header());

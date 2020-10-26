@@ -92,17 +92,21 @@ public class Main {
             e.printStackTrace();
         }
 
-
-
-
+        Result.printStrRepeat('-',30);
 
         System.out.println("Algemeen klassement vliegers");
         season.printGeneralResults();
 
+        Result.printStrRepeat('-',30);
+        System.out.println("Algemeen klassement liefhebbers");
+        season.printResultsOwners(null);
+
+        Result.printStrRepeat('-',30);
         Race.League league = Race.League.MARATHON;
         System.out.println("Klassement vliegers "+ league.label);
         season.printResults(Race.League.MARATHON);
 
+        Result.printStrRepeat('-',30);
         System.out.println("Klassement liefhebbers "+ league.label);
         season.printResultsOwners(Race.League.MARATHON);
 

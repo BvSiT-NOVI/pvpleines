@@ -66,4 +66,9 @@ public abstract class Result<T> {
     //TODO abstract but static in subclasses?
     //public abstract String header();
 
+    public static void printStrRepeat(char ch,int count){
+        //https://stackoverflow.com/questions/1900477/can-one-initialise-a-java-string-with-a-single-repeated-character-to-a-specific
+        System.out.println(new String(new char[count]).replace("\0", String.valueOf(ch)));
+    }
+
 }

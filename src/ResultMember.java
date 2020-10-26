@@ -48,4 +48,17 @@ public class ResultMember extends Result<Owner>{
         }
         return null;
     }
+
+    public static void addToList(Competitor competitor,List<ResultMember> resultMembers){
+        //Add ResultMember to list for this competitor if it does not exist in the list.
+        //Add score of competitor to score of the ResultMember for this competitor in the list
+        ResultMember resultMember = findByMemberRegistrationId(competitor.getMemberRegistrationId(),resultMembers);
+        if (resultMember == null){
+            resultMember = new ResultMember(competitor);//also adds first score
+            resultMembers.add(resultMember);
+        }
+        else {
+            resultMember.addScore(competitor.getScore());//TODO test if changed in list??
+        }
+    }
 }
