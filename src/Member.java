@@ -1,7 +1,11 @@
+import java.util.Date;
+
 public class Member extends Owner {
     static int instanceCounter = 1000;
     private boolean membershipFeePaid=false;
     private int registrationId;
+    private Date registrationDate;
+    private Date unsubscriptionDate;//To be able to continue to show results even if unsubscribed
 
     public Member(String firstName, String lastName, Location loftLocation) {
         super(firstName, lastName, loftLocation);
@@ -14,6 +18,7 @@ public class Member extends Owner {
         super.setPhoneNumber(owner.getPhoneNumber());
         super.setPigeonList(owner.getPigeonList());//TODO ?? This is only a reference, which would mean that if one changes the list in the org. owner it would also change in Member::owner
         registrationId= uniqueRegistrationId();
+        registrationDate = new Date();
     }
 
     private int uniqueRegistrationId(){
@@ -28,5 +33,9 @@ public class Member extends Owner {
 
     public boolean isMembershipFeePaid() {
         return membershipFeePaid;
+    }
+
+    public int getRegistrationId() {
+        return registrationId;
     }
 }

@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class ResultCompetitor extends Result<Competitor> {
 
     public final static String printFormatRace="%-20s %12s %10s %10s %12s %10s %10s";
@@ -63,5 +65,12 @@ public class ResultCompetitor extends Result<Competitor> {
                 Header.SCORE.label);
     }
 
+    public static ResultCompetitor findResultForCompetitor(Competitor competitor, List<ResultCompetitor> resultList){
+        for (ResultCompetitor r:resultList){
+            Competitor c =  r.get();
+            if (competitor.getOwnerID().equalsIgnoreCase(c.getOwnerID())) return r;
+        }
+        return null;
+    }
 
 }

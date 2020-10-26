@@ -187,8 +187,17 @@ public class Race {
             case FANCIER:
                 List<ResultMember> resultMembers = new ArrayList<>();
                 for (Competitor c: competitorList){
-                    resultMembers.add(new ResultMember(c.getCurrentOwner(),c.getScore())); //is already ordered on speed
+                    ResultMember rm;
+                    rm = ResultMember.findByMemberRegistrationId(c.getMemberRegistrationId(),resultMembers);
+                    if (rm == null){
+                        rm = new ResultMember(c);//also adds first score
+                        resultMembers.add(rm);
+                    }
+                    else {
+                        rm.addScore(c.getScore());//TODO test if changed in list??
+                    }
                 }
+                resultMembers.sort(new ResultComparator().reversed());
                 System.out.println(ResultMember.header());
                 for(ResultMember r: resultMembers){
                     System.out.println(r.line());
@@ -196,5 +205,4 @@ public class Race {
                 break;
         }
     }
-
 }

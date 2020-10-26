@@ -6,12 +6,16 @@ public class Competitor extends Pigeon {
     private Owner currentOwner;
     private double speedMps;
     private double score;
+    private int memberRegistrationId;
 
-    public Competitor(Pigeon pigeon, String chipNumber, Owner currentOwner) {
+    public Competitor(Pigeon pigeon, String chipNumber, Member currentMember) {
         super(pigeon.getYearBirth(), pigeon.getRingNumber());
         this.chipNumber = chipNumber;
-        this.currentOwner= new Owner(currentOwner.getFirstName()  //create a deep copy NB TODO with empty Owner::pigeonList ??
-                ,currentOwner.getLastName(),currentOwner.getLoftLocation());
+        //currentOwner::pigeonList does not need to be set since Competitor class concerns only this Pigeon
+        //In contrast, we save Member::registrationId to be able to identify the current owner
+        this.currentOwner= new Owner(currentMember.getFirstName()  //create a deep copy
+                ,currentMember.getLastName(),currentMember.getLoftLocation());
+        memberRegistrationId = currentMember.getRegistrationId();
     }
 
     public Date getFinishTime() {
@@ -51,6 +55,10 @@ public class Competitor extends Pigeon {
 
     public void setScore(double score) {
         this.score = score;
+    }
+
+    public int getMemberRegistrationId() {
+        return memberRegistrationId;
     }
 
     @Override

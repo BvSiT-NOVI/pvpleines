@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 
 public abstract class Result<T> {
     private T t;
-    private Double score;
+    private double score;
 
     public static enum ResultType{
         FLYER,
@@ -55,6 +55,11 @@ public abstract class Result<T> {
     public void setScore(double score) {
         this.score = score;
     }
+
+    public void addScore(double score){
+        this.score+=score;
+    }
+
 
     public abstract String line();
 

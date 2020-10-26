@@ -71,8 +71,10 @@ public class Main {
             c4.setFinishTime(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS").parse("15-08-2020 13:20:12.456"));
         }
 
+        //Results after race is finished
 
-        System.out.println("Uitslag vliegers " + race1.getName()+ " Competitie: " + race1.getLeague().label);
+        System.out.println("Uitslagen " + race1.getName()+ " Competitie: " + race1.getLeague().label);
+        System.out.println("Vliegers:");
         //TODO simplify
         try{
             race1.printResult(Result.ResultType.FLYER);
@@ -81,12 +83,28 @@ public class Main {
            e.printStackTrace();
         }
 
+        System.out.println("Liefhebbers:");
+        //TODO simplify
+        try{
+            race1.printResult(Result.ResultType.FANCIER);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
+
+
         System.out.println("Algemeen klassement vliegers");
         season.printGeneralResults();
 
         Race.League league = Race.League.MARATHON;
-        System.out.println("Klassement "+ league.label);
+        System.out.println("Klassement vliegers "+ league.label);
         season.printResults(Race.League.MARATHON);
+
+        System.out.println("Klassement liefhebbers "+ league.label);
+        season.printResultsOwners(Race.League.MARATHON);
 
         //TODO Transfer ownership of pigeon
     }

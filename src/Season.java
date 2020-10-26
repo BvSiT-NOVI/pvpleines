@@ -32,10 +32,10 @@ public class Season implements Comparable<Season>{
 
     public void printResults(Race.League league){
         List<ResultCompetitor> resultList = new ArrayList<>();
-        for (Race r:raceList){
-            if (r.getLeague()==league || league==null){
-                for (Competitor c:r.getCompetitorList()){
-                    ResultCompetitor found = findResultForCompetitor(c,resultList);
+        for (Race race:raceList){
+            if (race.getLeague()==league || league==null){
+                for (Competitor c:race.getCompetitorList()){
+                    ResultCompetitor found = ResultCompetitor.findResultForCompetitor(c,resultList);
                     if (found==null){
                         resultList.add(new ResultCompetitor(c,c.getScore()));
                     }
@@ -49,10 +49,41 @@ public class Season implements Comparable<Season>{
         resultList.sort(new ResultComparator().reversed());
 
         System.out.println(ResultCompetitor.header());
-        for (ResultCompetitor r: resultList){
-            System.out.println(r.line() );
+        for (ResultCompetitor rc: resultList){
+            System.out.println(rc.line() );
         }
     }
+
+    public void printResultsOwners(Race.League league){
+        List<ResultMember> resultMembers = new ArrayList<>();
+        for (Race race:raceList){
+            if (race.getLeague()==league || league==null){
+                for (Competitor c:race.getCompetitorList()){
+                    ResultMember rm;
+                    rm = ResultMember.findByMemberRegistrationId(c.getMemberRegistrationId(),resultMembers);
+                    if (rm == null){
+                        rm = new ResultMember(c);
+                        resultMembers.add(rm);
+                    }
+                    rm.addScore(c.getScore());//TODO test if changed in list??
+                }
+            }
+        }
+
+        resultMembers.sort(new ResultComparator().reversed());
+
+        System.out.println(ResultMember.header());
+        for (ResultMember rm: resultMembers){
+            System.out.println(rm.line() );
+        }
+    }
+
+
+
+
+
+
+
 
 /*
     public void printResultsFanciers(Race.League league){
@@ -79,15 +110,6 @@ public class Season implements Comparable<Season>{
         }
     }
 */
-
-
-    private ResultCompetitor findResultForCompetitor(Competitor competitor,List<ResultCompetitor> resultList){
-        for (ResultCompetitor r:resultList){
-            Competitor c =  r.get();
-            if (competitor.getOwnerID().equalsIgnoreCase(c.getOwnerID())) return r;
-        }
-        return null;
-    }
 
     @Override
     public int compareTo(Season season) {
