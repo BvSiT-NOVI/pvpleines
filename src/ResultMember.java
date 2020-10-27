@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,7 +18,8 @@ public class ResultMember extends Result<Owner>{
         this.memberRegistratonId = memberRegistratonId;
     }
 
-    public ResultMember(Competitor c){
+    public ResultMember(Competitor c)
+    {
         this(c.getCurrentOwner(),c.getMemberRegistrationId(), c.getScore());
     }
 
@@ -28,7 +30,7 @@ public class ResultMember extends Result<Owner>{
     //https://c4code.wordpress.com/2018/03/17/how-to-print-the-results-to-console-in-a-tabular-format-using-java
     //https://dzone.com/articles/how-to-format-a-string-clarified
     @Override
-    public String line() {
+    public String row() {
         return String.format(printFormat, super.get().getFullName(), numberformat.format(getScore()));
     }
 
@@ -49,7 +51,7 @@ public class ResultMember extends Result<Owner>{
         return null;
     }
 
-    public static void addToList(Competitor competitor,List<ResultMember> resultMembers){
+    public static void addScoreToList(Competitor competitor, List<ResultMember> resultMembers){
         //Add ResultMember to list for this competitor if it does not exist in the list.
         //Add score of competitor to score of the ResultMember for this competitor in the list
         ResultMember resultMember = findByMemberRegistrationId(competitor.getMemberRegistrationId(),resultMembers);
@@ -60,5 +62,13 @@ public class ResultMember extends Result<Owner>{
         else {
             resultMember.addScore(competitor.getScore());//TODO test if changed in list??
         }
+    }
+
+    public static List<ResultMember> addScores(List<Competitor> competitorList,List<ResultMember> resultList){
+        if (resultList==null) resultList = new ArrayList<>();
+        for (Competitor c: competitorList){
+            ResultMember.addScoreToList(c,resultList);
+        }
+        return resultList;
     }
 }

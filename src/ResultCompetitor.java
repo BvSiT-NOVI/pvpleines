@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultCompetitor extends Result<Competitor> {
@@ -6,7 +7,7 @@ public class ResultCompetitor extends Result<Competitor> {
     public final static String printFormat="%-20s %12s %10s";
 
     public ResultCompetitor(Competitor competitor) {
-        super(competitor);
+        super(competitor, competitor.getScore());
     }
 
     public ResultCompetitor(Competitor competitor, double score) {
@@ -16,9 +17,8 @@ public class ResultCompetitor extends Result<Competitor> {
     //https://c4code.wordpress.com/2018/03/17/how-to-print-the-results-to-console-in-a-tabular-format-using-java
     //https://dzone.com/articles/how-to-format-a-string-clarified
     //@Override
-    public String line() {
+    public String row() {
         Competitor c = get();
-        //TODO extract format string as (static?) variable?
         return String.format(printFormat,
                 c.getCurrentOwner().getFullName(),
                 c.getOwnerID(),
@@ -71,6 +71,36 @@ public class ResultCompetitor extends Result<Competitor> {
             if (competitor.getOwnerID().equalsIgnoreCase(c.getOwnerID())) return r;
         }
         return null;
+    }
+
+    public static void addScoreToList(Competitor competitor, List<ResultCompetitor> resultCompetitors){
+        //Add ResultMember to list for this competitor if it does not exist in the list.
+        //Add score of competitor to score of the ResultMember for this competitor in the list
+        ResultCompetitor resultCompetitor = findResultForCompetitor(competitor,resultCompetitors);
+        if (resultCompetitor == null){
+            resultCompetitor = new ResultCompetitor(competitor);//also adds score for this competitor
+            resultCompetitors.add(resultCompetitor);
+        }
+        else {
+            resultCompetitor.addScore(competitor.getScore());//TODO test if changed in list??
+        }
+    }
+
+    //TODO remove?
+    public static List<ResultCompetitor> addScores(List<Competitor> competitorList){
+        List<ResultCompetitor> resultList = new ArrayList<>();
+        for (Competitor c: competitorList){
+            ResultCompetitor.addScoreToList(c,resultList);
+        }
+        return resultList;
+    }
+
+    public static List<ResultCompetitor> addScores(List<Competitor> competitorList,List<ResultCompetitor> resultList){
+        if (resultList==null) resultList = new ArrayList<>();
+        for (Competitor c: competitorList){
+            ResultCompetitor.addScoreToList(c,resultList);
+        }
+        return resultList;
     }
 
 }

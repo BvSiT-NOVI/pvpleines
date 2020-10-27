@@ -1,6 +1,8 @@
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Result<T> {
     private T t;
@@ -60,12 +62,12 @@ public abstract class Result<T> {
         this.score+=score;
     }
 
-
-    public abstract String line();
+    public abstract String row();
 
     //TODO abstract but static in subclasses?
     //public abstract String header();
 
+    //TODO move?
     public static void printStrRepeat(char ch,int count){
         //https://stackoverflow.com/questions/1900477/can-one-initialise-a-java-string-with-a-single-repeated-character-to-a-specific
         System.out.println(new String(new char[count]).replace("\0", String.valueOf(ch)));

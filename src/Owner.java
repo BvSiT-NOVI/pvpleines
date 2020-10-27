@@ -51,14 +51,6 @@ public class Owner {
         this.phoneNumber = phoneNumber;
     }
 
-//    public boolean isMembershipFeePaid() {
-//        return membershipFeePaid;
-//    }
-
-//    public void setMembershipFeePaid(boolean membershipFeePaid) {
-//        this.membershipFeePaid = membershipFeePaid;
-//    }
-
     public Location getLoftLocation() {
         return loftLocation;
     }

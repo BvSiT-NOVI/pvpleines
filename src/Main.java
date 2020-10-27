@@ -2,6 +2,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+//TODO where to save countryCode, used in Pigeon ring ID?
+//TODO Young pigeons only add to race if same year
+//TODO Speed unit: KM/H? KM/minute?
+//TODO PrintTable as interface?
+//TODO packages
+//TODO Replace Date by Calendar
+//TODO add memberRegistrationID as column in printed results
+
 public class Main {
     public static void main(String[] args) throws ParseException {
         Association association= new Association("PV De Snelvlieger",
@@ -77,7 +85,7 @@ public class Main {
         System.out.println("Vliegers:");
         //TODO simplify
         try{
-            race1.printResult(Result.ResultType.FLYER);
+            race1.printResults(Result.ResultType.FLYER);
         }
         catch (Exception e){
            e.printStackTrace();
@@ -86,7 +94,7 @@ public class Main {
         System.out.println("Liefhebbers:");
         //TODO simplify
         try{
-            race1.printResult(Result.ResultType.FANCIER);
+            race1.printResults(Result.ResultType.FANCIER);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -95,20 +103,22 @@ public class Main {
         Result.printStrRepeat('-',30);
 
         System.out.println("Algemeen klassement vliegers");
-        season.printGeneralResults();
+        //season.printGeneralResults();
+
+        season.printResults(null, Result.ResultType.FLYER);
 
         Result.printStrRepeat('-',30);
         System.out.println("Algemeen klassement liefhebbers");
-        season.printResultsOwners(null);
+        season.printResults(null, Result.ResultType.FANCIER);
 
         Result.printStrRepeat('-',30);
         Race.League league = Race.League.MARATHON;
         System.out.println("Klassement vliegers "+ league.label);
-        season.printResults(Race.League.MARATHON);
+        season.printResults(Race.League.MARATHON, Result.ResultType.FLYER);
 
         Result.printStrRepeat('-',30);
         System.out.println("Klassement liefhebbers "+ league.label);
-        season.printResultsOwners(Race.League.MARATHON);
+        season.printResults(Race.League.MARATHON, Result.ResultType.FANCIER);
 
         //TODO Transfer ownership of pigeon
     }

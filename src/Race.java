@@ -1,6 +1,3 @@
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Race {
@@ -78,6 +75,7 @@ public class Race {
         return competitorList;
     }
 
+    //TODO Move?
     public static double calcSpeedMps(double distanceKM,Date start,Date end){
         //TODO best procedure to calc duration? Use Calendar?
         long seconds = (end.getTime() - start.getTime())/1000;
@@ -95,6 +93,7 @@ public class Race {
         return 0.0;
     }
 
+    //TODO move?
     public static double calcScore(double distanceKM,int ranking,int numCompetitors){
         return distanceKM + numCompetitors +1 - ranking;
     }
@@ -132,7 +131,7 @@ public class Race {
         return null;
     }
 
-    public void calcResult(){
+    public void calcResults(){
         //Calculate average speed and save in Competitor
         for (Competitor c:competitorList){
             c.setSpeedMps(this);
@@ -151,14 +150,12 @@ public class Race {
         }
     }
 
-    public void printResult(Result.ResultType resultType) throws Exception {
-        calcResult();//TODO Only execute once
+    public void printResults(Result.ResultType resultType) throws Exception {
+        calcResults();//TODO Only execute once
         switch (resultType){
             case FLYER:
-                List<ResultCompetitor> resultCompetitors = new ArrayList<>();
-                for (Competitor c: competitorList){
-                    resultCompetitors.add(new ResultCompetitor(c,c.getScore())); //is already ordered on speed
-                }
+                //Competitors are already ordered on speed in calcResults()
+                List<ResultCompetitor> resultCompetitors = ResultCompetitor.addScores(competitorList);
                 System.out.println(ResultCompetitor.headerRace());
                 for(ResultCompetitor r: resultCompetitors){
                     System.out.println(r.lineRace(this));
@@ -166,15 +163,15 @@ public class Race {
                 break;
             case FANCIER:
                 List<ResultMember> resultMembers = new ArrayList<>();
-                for (Competitor c: competitorList){
-                    ResultMember.addToList(c,resultMembers);//Add first ResultMember to list if not exists, then add score for this competitor
-                }
+                //For each competitor add a ResultMember if not exists for this Member. Add score to found ResultMember for the competitor.
+                ResultMember.addScores(competitorList,resultMembers);
                 resultMembers.sort(new ResultComparator().reversed());
                 System.out.println(ResultMember.header());
                 for(ResultMember r: resultMembers){
-                    System.out.println(r.line());
+                    System.out.println(r.row());
                 }
                 break;
         }
     }
+
 }

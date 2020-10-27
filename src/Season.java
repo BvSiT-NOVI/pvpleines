@@ -26,49 +26,40 @@ public class Season implements Comparable<Season>{
         return true;
     }
 
-    public void printGeneralResults() {
-        printResults(null);
-    }
-
-    public void printResults(Race.League league){
-        List<ResultCompetitor> resultList = new ArrayList<>();
-        for (Race race:raceList){
-            if (race.getLeague()==league || league==null){
-                //TODO move to ResultCompetitor.addToList
-                for (Competitor c:race.getCompetitorList()){
-                    ResultCompetitor found = ResultCompetitor.findResultForCompetitor(c,resultList);
-                    if (found==null){
-                        resultList.add(new ResultCompetitor(c,c.getScore()));
-                    }
-                    else {
-                        found.setScore(found.getScore()+c.getScore());
+    public void printResults(Race.League league,Result.ResultType resultType){
+        switch (resultType){
+            case FANCIER: {
+                //Collect total of scores of the flyers for each fancier for the races in the league
+                List<ResultMember> resultList = new ArrayList<>();
+                for (Race race : raceList) {
+                    if (race.getLeague() == league || league == null) {
+                        ResultMember.addScores(race.getCompetitorList(), resultList);
                     }
                 }
-            }
-        }
 
-        resultList.sort(new ResultComparator().reversed());
-
-        System.out.println(ResultCompetitor.header());
-        for (ResultCompetitor rc: resultList){
-            System.out.println(rc.line() );
-        }
-    }
-
-    public void printResultsOwners(Race.League league){
-        List<ResultMember> resultMembers = new ArrayList<>();
-        for (Race race:raceList){
-            if (race.getLeague()==league || league==null){
-                for (Competitor c:race.getCompetitorList()){
-                    ResultMember.addToList(c,resultMembers);//First add ResultMember to list if not exists, then add score for this competitor
+                resultList.sort(new ResultComparator().reversed());
+                System.out.println(ResultMember.header());
+                for (ResultMember rm : resultList) {
+                    System.out.println(rm.row());
                 }
+                break;
             }
-        }
+            case FLYER: {
+                //Collect total of scores for each competitor for the races in the league
+                List<ResultCompetitor> resultList = new ArrayList<>();
+                for (Race race : raceList) {
+                    if (race.getLeague() == league || league == null) {
+                        ResultCompetitor.addScores(race.getCompetitorList(), resultList);
+                    }
+                }
 
-        resultMembers.sort(new ResultComparator().reversed());
-        System.out.println(ResultMember.header());
-        for (ResultMember rm: resultMembers){
-            System.out.println(rm.line() );
+                resultList.sort(new ResultComparator().reversed());
+                System.out.println(ResultCompetitor.header());
+                for (ResultCompetitor rc : resultList) {
+                    System.out.println(rc.row());
+                }
+                break;
+            }
         }
     }
 
