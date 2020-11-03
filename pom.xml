@@ -9,11 +9,23 @@
     <version>1.0-SNAPSHOT</version>
 
     
-    <!-- BvS:BEGIN -->
+<!-- BvS:BEGIN -->
 	<properties>
         <java.version>1.8</java.version>
         <maven.compiler.source>$JAVA.VERSION$</maven.compiler.source>
         <maven.compiler.target>$JAVA.VERSION$</maven.compiler.target>
     </properties>
 <!-- BvS:END -->
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
 </project>
