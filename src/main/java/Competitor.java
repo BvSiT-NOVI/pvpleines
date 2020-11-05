@@ -3,7 +3,7 @@ import java.util.Date;
 public class Competitor extends Pigeon {
     private Date finishTime;
     private String chipNumber;
-    private Owner currentOwner;//save member data as exist when instantiating
+    private Owner currentOwner;//save owner data as exist when instantiating (loft location)
     private double speedMps;
     private double score;
     private Member currentMember;//save member data as exist when instantiating
@@ -12,7 +12,7 @@ public class Competitor extends Pigeon {
         super(pigeon.getYearBirth(), pigeon.getRingNumber());
         this.chipNumber = chipNumber;
 
-        //Create a partial deep copy with essential data as is on moment of creation
+        //Create a partial deep copy with essential data as is on moment of instantiating
         this.currentOwner = owner.copy();//currentOwner::pigeonList does not need to be set since Competitor class concerns only this Pigeon
         this.currentMember= member.copy();
     }
