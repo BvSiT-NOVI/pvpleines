@@ -3,52 +3,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Owner {
-    private String firstName;
-    private String lastName;
-    private String emailAddress;
-    private String phoneNumber;
-    //private boolean membershipFeePaid;
+public class Owner{
+
     private Location loftLocation;
     private List<Pigeon> pigeonList;
+    private int memberId; //TODO how to ensure this can only be set in Association.addMember?
 
-    public Owner(String firstName, String lastName, Location loftLocation) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Owner(Location loftLocation) {
         this.loftLocation = loftLocation;
         pigeonList = new ArrayList<>();
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public Location getLoftLocation() {
@@ -67,10 +30,6 @@ public class Owner {
         this.pigeonList = pigeonList;
     }
 
-    public String getFullName(){
-       return firstName.substring(0, 1).toUpperCase() + ". " + lastName;
-    }
-
     public boolean addPigeon(Pigeon pigeon){
         //TODO check if exists
         pigeonList.add(pigeon);
@@ -86,16 +45,18 @@ public class Owner {
         return null;
     }
 
-    @Override
-    public String toString() {
-        return "Member{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", emailAddress='" + emailAddress + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-//                ", membershipFeePaid=" + membershipFeePaid +
-                ", loftLocation=" + loftLocation +
-                ", pigeonList=" + pigeonList +
-                '}';
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+
+    public Owner copy(){
+        //Create copy with only essential data
+        Owner owner = new Owner(loftLocation);
+        owner.setMemberId(memberId);
+        return owner;
     }
 }

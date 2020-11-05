@@ -15,6 +15,7 @@ public abstract class Result<T> {
 
     public enum Header {
         OWNER_NAME("Lid"),
+        MEMBER_ID("Lidnr."),
         OWNER_RING_ID("RingID"),
         CHIP_ID("ChipId"),
         DISTANCE("AfstandKM"),
@@ -32,6 +33,7 @@ public abstract class Result<T> {
 
     public SimpleDateFormat timeformat = new SimpleDateFormat("h:mm:ss.sss");
     public NumberFormat numberformat = new DecimalFormat("#0.000");
+    public NumberFormat memberIdFormat = new DecimalFormat("#0000");
 
     public T get(){
         return this.t;

@@ -9,6 +9,9 @@ public class Association {
     private String countryCode; // ISO 3166-1 alpha-2 – two-letter country code, mostly NL
     private String phoneNumber;
     private List<Member> memberList;
+    private List<Owner> ownerList;
+
+    private int counterMemberRegistrationId=1000;//to create unique memberRegistrationId when adding Member
 
     public Association(String name, String streetAddress, String city, String zipCode, String countryCode, String phoneNumber) {
         this.name = name;
@@ -18,6 +21,7 @@ public class Association {
         this.countryCode = countryCode; //TODO country code as also used in owner registration ring number always NL and depends not on association
         this.phoneNumber = phoneNumber;
         memberList = new ArrayList<>();
+        ownerList = new ArrayList<>();
     }
 
     public String getName() {
@@ -72,26 +76,45 @@ public class Association {
         return memberList;
     }
 
-    public boolean addMember(Member member){
-        //TODO check if exists
-        memberList.add(member);
-        return true;
+    public List<Owner> getOwnerList() {
+        return ownerList;
     }
 
-    public boolean addMember(Owner owner){
+    public int addMember(Member member){
         //TODO check if exists
-        memberList.add(new Member(owner));
-        return true;
+        member.setId(counterMemberRegistrationId++);
+        memberList.add(member);
+        return member.getId();
+    }
+
+    public int addOwner(Member member,Owner owner){
+        //TODO check if exists
+        int id = addMember(member);
+        owner.setMemberId(id);
+        ownerList.add(owner);
+        return id;
     }
 
     public Owner getOwner(Pigeon pigeon){
-        for (Owner m: memberList){
-            for (Pigeon p:m.getPigeonList()){
-                if (p.hasOwnerID(pigeon.getShortYear(), pigeon.getRingNumber())) return m;
+        for (Owner owner: ownerList){
+            for (Pigeon p:owner.getPigeonList()){
+                if (p.hasOwnerID(pigeon.getShortYear(), pigeon.getRingNumber())) return owner;
             }
         }
         return null;
     }
 
+    public Owner getOwner(int memberId){
+        for (Owner owner: ownerList){
+            if (owner.getMemberId()==memberId) return owner ;
+        }
+        return null;
+    }
 
+    public Member getMember(int memberId){
+        for (Member m: memberList){
+                if (m.getId()==memberId) return m ;
+        }
+        return null;
+    }
 }

@@ -8,12 +8,12 @@
     <artifactId>pvpleines</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    
+
 <!-- BvS:BEGIN -->
 	<properties>
         <java.version>1.8</java.version>
-        <maven.compiler.source>$JAVA.VERSION$</maven.compiler.source>
-        <maven.compiler.target>$JAVA.VERSION$</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 <!-- BvS:END -->
 

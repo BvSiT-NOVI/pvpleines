@@ -11,9 +11,17 @@ public class Pigeon {
     private String ringNumber;
     private String countryCode="NL";//TODO
 
+    private static int instanceCounter=10000;
+
     public Pigeon(Date yearBirth, String ringNumber) {
         this.yearBirth = yearBirth;
         this.ringNumber = ringNumber;
+    }
+
+    static public String getUniqueId(){
+        //https://stackoverflow.com/questions/13431013/increments-by-1-and-add-it-with-every-created-object
+        instanceCounter++;
+        return String.valueOf(instanceCounter);
     }
 
     public Date getYearBirth() {

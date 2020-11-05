@@ -146,7 +146,7 @@ public class Race {
             Competitor c = competitorList.get(i);
             //TODO distance is calculated also for calc speed
             double distance = getDistance(c.getCurrentOwner().getLoftLocation());
-            c.setScore(calcScore(distance,i+1,numQualifiedCompetitors));
+            if (c.getSpeedMps()>0) c.setScore(calcScore(distance,i+1,numQualifiedCompetitors));
         }
     }
 

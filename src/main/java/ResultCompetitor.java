@@ -20,7 +20,7 @@ public class ResultCompetitor extends Result<Competitor> {
     public String row() {
         Competitor c = get();
         return String.format(printFormat,
-                c.getCurrentOwner().getFullName(),
+                c.getCurrentMember().getFullName(),
                 c.getOwnerID(),
                 numberformat.format(getScore())
         );
@@ -43,12 +43,12 @@ public class ResultCompetitor extends Result<Competitor> {
 
         double distance = Geo.distance(race.getLiberationPlace().getLocation(), c.getCurrentOwner().getLoftLocation());
         return String.format(printFormatRace,
-                c.getCurrentOwner().getFullName(),
+                c.getCurrentMember().getFullName(),
                 c.getOwnerID(),
                 c.getChipNumber(),
                 numberformat.format(distance),
                 //TODO race time
-                timeformat.format(c.getFinishTime()),
+                (c.getFinishTime()!=null)?timeformat.format(c.getFinishTime()): "N/A",
                 numberformat.format(c.getSpeedMps()),
                 numberformat.format(getScore())  //NB not from Competitor::getScore
         );

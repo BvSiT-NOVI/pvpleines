@@ -15,7 +15,8 @@ public class MainTest {
         System.out.println(nf.format(speed));
 
         final Place BERGERAC = new Place("Bergerac",new Location(0.30240,44.50490));
-        Owner owner1 = new Owner("Gerrit","van Straten",new Location(4.619346,52.389359 ));
+
+        Owner owner1 = new Owner(new Location(4.619346,52.389359 ));
 
         System.out.println(Geo.distance(BERGERAC.getLocation(), owner1.getLoftLocation()));
 

@@ -3,19 +3,18 @@ import java.util.Date;
 public class Competitor extends Pigeon {
     private Date finishTime;
     private String chipNumber;
-    private Owner currentOwner;
+    private Owner currentOwner;//save member data as exist when instantiating
     private double speedMps;
     private double score;
-    private int memberRegistrationId;
+    private Member currentMember;//save member data as exist when instantiating
 
-    public Competitor(Pigeon pigeon, String chipNumber, Member currentMember) {
+    public Competitor(Pigeon pigeon, String chipNumber, Member member,Owner owner) {
         super(pigeon.getYearBirth(), pigeon.getRingNumber());
         this.chipNumber = chipNumber;
-        //currentOwner::pigeonList does not need to be set since Competitor class concerns only this Pigeon
-        //In contrast, we save Member::registrationId to be able to identify the current owner
-        this.currentOwner= new Owner(currentMember.getFirstName()  //create a deep copy
-                ,currentMember.getLastName(),currentMember.getLoftLocation());
-        memberRegistrationId = currentMember.getRegistrationId();
+
+        //Create a partial deep copy with essential data as is on moment of creation
+        this.currentOwner = owner.copy();//currentOwner::pigeonList does not need to be set since Competitor class concerns only this Pigeon
+        this.currentMember= member.copy();
     }
 
     public Date getFinishTime() {
@@ -32,6 +31,10 @@ public class Competitor extends Pigeon {
 
     public Owner getCurrentOwner() {
         return currentOwner;
+    }
+
+    public Member getCurrentMember() {
+        return currentMember;
     }
 
     public double getSpeedMps() {
@@ -55,10 +58,6 @@ public class Competitor extends Pigeon {
 
     public void setScore(double score) {
         this.score = score;
-    }
-
-    public int getMemberRegistrationId() {
-        return memberRegistrationId;
     }
 
     @Override
